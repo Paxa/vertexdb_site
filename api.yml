@@ -1,0 +1,106 @@
+actions:
+  mkdir:
+    description: Creates a node at the specified path. If the path already exists, no operation is performed.
+    returns: null on success
+    examples:
+      -
+        req: /path?action=mkdir
+        resp: "null"
+        
+  rm:    
+    description: Removes a node at the specified path.
+    returns: null on success, error if if the path does not exist
+    arguments:
+      key: key name
+    examples:
+      -
+        req: /path?action=rm&key=foo
+        resp: "null"
+  
+  size:
+    description: counts number of slots at the node in the specified path
+    returns: number or an error if the path doesn't exist
+    examples:
+      -
+        req: /path?action=size
+        resp: 423
+        
+  link:
+    description: Links a node at a source path to a key on a node at the destination path
+    returns: null or an error if the path doesn't exist
+    examples:
+    -
+      req: /sourcePath/?action=link&key=k&toPath=destinationPath
+      resp: "null"
+
+  read:
+    description: Read a value at a given path
+    returns: the value on success
+    examples:
+      -
+        req: /path?action=read
+        resp: "foo"
+
+  write:
+    description: Sets or appends a value at a specified path
+    returns: null on success
+    examples:
+      -
+        req: /path?key=k&action=write&mode=set
+        post: foo
+        resp: "null"
+      -
+        req: /path?action=write&mode=append
+        post: bar
+        resp: "null"
+
+
+  select:
+    description: Selects node contents
+    option_params:
+      - before=key
+      - after=key
+      - count=max
+      - whereKey=k&whereValue=v
+    returns: content or error if path doesn't exist
+    examples:
+      -
+        title: op=pairs
+        description: Returns a list of pairs [key, value] whose nodes match the query.
+        req: /path?action=select&op=pairs
+        resp: '[["a","1"], ["b","2"], ["c","3"]]'
+      -
+        title: op=keys
+        description: Returns a list of keys whose nodes match the query.
+        req: /path?action=select&op=keys
+        resp: '["keyA", "keyB", "keyC"]'
+      -
+        title: op=values
+        description: Returns a list of values matching the query.
+        req: /path?action=select&op=values
+        resp: '["value1", "value2", "value3"]'
+      -
+        title: op=object
+        description: Returns a list of the matching objects in JSON dict.
+        req: /path?action=select&op=object
+        resp: '{"a": "1", "b": "2", "c": "3"}'
+        
+      -
+        title: op=counts
+        description:
+        req: /path?action=select&op=counts
+        resp: 423
+        
+      -
+        title: op=counts
+        description: Removes keys matching selection. Returns the number of removed keys on success.
+        req: /path?action=select&op=rm
+        resp: 423
+        
+  find:
+    description: Find object by internal id
+    returns: object
+    examples:
+      -
+        req: /?action=find&id=136363481
+        resp: '{"a": "1", "b": "2", "c": "3"}'

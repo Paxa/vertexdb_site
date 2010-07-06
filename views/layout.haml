@@ -1,0 +1,42 @@
+!!! Strict
+%html
+  %head
+    %link{ :href => '/rattan.css', :type => 'text/css', :rel => 'stylesheet'}/
+    %link{ :href => '/application.css', :type => 'text/css', :rel => 'stylesheet'}/
+    %title= (@title || 'No title') + ' - VertexDB'
+    
+  %body
+    #wrap
+      #logo
+        %h1= link_to 'VertexDB', '/'
+        %h2 &mdash; super fast graph database
+
+      #content
+        #primary
+          = yield
+        
+        #secondary 
+          %ul
+            %li= link_to 'Home', '/'
+            %li= link_to 'GitHub repo', 'http://github.com/stevedekorte/vertexdb'
+            %li
+              = link_to 'Installation', '/install'
+              %ul
+                %li= link_to 'Mac OS X', '/install#macos'
+                %li= link_to 'Linux', '/install#linux'
+                
+            %li= link_to 'First steps', '/first_steps'
+            %li
+              = link_to 'API Reference', '/doc'
+              - if @api
+                %ul
+                  - @api['actions'].each do |met_name, met|
+                    %li= link_to met_name, "/doc##{met_name}"
+            %li= link_to 'Usage examples', '/examples'
+          
+          #tags
+        
+      #footer
+        sinatra based 2010
+        
+    .line1

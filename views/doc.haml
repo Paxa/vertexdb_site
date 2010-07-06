@@ -1,0 +1,29 @@
+- @api['actions'].each do |pair|
+  - met_name, met = pair
+  .method
+    %h3
+      = met_name
+      = link_to '#', "/doc##{met_name}", :name => "#{met_name}", :class => 'page_place'
+    %hr
+    
+    %p= met['description']
+    .return
+      %strong Returns:
+      %i= met['returns']
+      
+    .examples
+      %strong Examples
+      - met['examples'].each do |ex|
+        - if ex['title']
+          %h5= ex['title']
+        %div
+          .req
+            Request:
+            %code= ex['req']
+          - if ex['post']
+            .post
+              Post:
+              %code= ex['post']
+          .resp
+            Response:
+            %code= ex['resp']
