@@ -6,6 +6,11 @@ require 'helpers'
 
 set :enviroment, :development
 
+before do
+  @api = YAML.load_file './api.yml'
+  @api['actions'] = @api['actions'].sort {|a, b| a[0] <=> b[0]}
+end
+
 get '/' do
   @title = ''
   haml :index
@@ -22,13 +27,11 @@ get '/rattan.css' do
 end
 
 get '/doc' do
-  @api = YAML.load_file './api.yml'
-  @api['actions'] = @api['actions'].sort {|a, b| a[0] <=> b[0]}
   haml :doc
 end
 
 get '/:page' do
   @title = ''
-  return haml :page_404 unless %w{install doc first_steps examples}.include? params[:page]
+  return haml :page_404 unless %w{install doc quick_start guides}.include? params[:page]
   haml params[:page].to_sym
 end

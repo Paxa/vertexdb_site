@@ -92,7 +92,7 @@ actions:
         resp: 423
         
       -
-        title: op=counts
+        title: op=rm
         description: Removes keys matching selection. Returns the number of removed keys on success.
         req: /path?action=select&op=rm
         resp: 423
@@ -104,3 +104,11 @@ actions:
       -
         req: /?action=find&id=136363481
         resp: '{"a": "1", "b": "2", "c": "3"}'
+        
+  increase:
+    description: Increase value of specified key by 1
+    returns: number
+    examples:
+      -
+        req: /?action=increase&key=_counter
+        resp: 1
