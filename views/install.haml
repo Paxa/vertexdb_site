@@ -3,6 +3,7 @@
 
 %p
   It requires
+%div
   %ul
     %li TokyoCabinet, a b-tree key/value disk store
     %li libevent, for asynchronous sockets and HTTP
@@ -15,17 +16,40 @@
 %p
   For compiling you should have installed xcode
 
-%p 
-  Run this in terminal
-  
-  %pre.code
+%div 
+  %p 
+    If you use 
+    = link_to "HomeBrew", 'http://mxcl.github.com/homebrew/'
+  %pre.code.install
     :preserve
-      sudo port install yajl tokyocabinet libevent tokyocabinet libzip
-      git clone http://github.com/stevedekorte/vertexdb.git
-      cd vertexdb
-      ./bin/compile
+      $ brew install yajl tokyo-cabinet libevent cmake
       
+  %p for macport users
+  %pre.code.install
+    :preserve
+      $ port install yajl tokyocabinet libevent tokyocabinet libzip cmake
+      
+  %p Than:
+  %pre.code.install
+    :preserve
+      $ git clone http://github.com/stevedekorte/vertexdb.git
+      $ cd vertexdb
+      $ cmake .
+      $ make && make install
+      
+  %p Running
+  %pre.code.install
+    :preserve
+      $ vertexdb -db blog1.db
+      
+  %p Or as a daemon
+  %pre.code.install
+    :preserve
+      $ sudo vertexdb -db /opt/database -d --pid /var/run/vertex.pid
 
 %h2 
   Linux
   = link_to '#', '#linux', :class => 'page_place'
+
+%div
+  %p Run the same actions, but with your system packet-manager

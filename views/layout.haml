@@ -6,10 +6,11 @@
     %title= (@title || 'No title') + ' - VertexDB'
     
   %body
+    %a.github_fork{ :href => 'http://github.com/stevedekorte/vertexdb' }
     #wrap
       #logo
         %h1= link_to 'VertexDB', '/'
-        %h2 &mdash; super fast graph database
+        %h2 super fast graph database
         
         %ul.menu
           %li= link_to 'Home', '/'
@@ -30,8 +31,11 @@
                 %ul
                   - @api['actions'].each do |met_name, met|
                     %li= link_to met_name, "/doc##{met_name}"
+            %li= link_to "Maintain database", "/maintain"
+            
           
           #tags
         
       #footer
-        sinatra based 2010
+        = link_to "This site repo", 'http://github.com/Paxa/vertexdb_site'
+        2010
