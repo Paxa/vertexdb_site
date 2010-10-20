@@ -1,9 +1,7 @@
 require 'rubygems'
-require 'sinatra'
+require 'bundler'
 
-require 'coderay'
-require 'rack/codehighlighter'
-require 'haml'
+Bundler.require
 
 use Rack::Codehighlighter, :coderay, :element => "pre", :pattern => /\A!!(\w+)\s*\n/
 
@@ -11,6 +9,7 @@ require 'yaml'
 require 'helpers'
 
 set :enviroment, :development
+set :app_file, $0
 
 before do
   @api = YAML.load_file './api.yml'
@@ -30,6 +29,11 @@ end
 get '/rattan.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :rattan
+end
+
+get '/coderay.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :coderay
 end
 
 get '/doc' do

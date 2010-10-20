@@ -18,8 +18,94 @@
 
 %pre
   :preserve
-    !!JSON
+    !!JavaScript
     {
       "_first_name": "Benjamin",
-      "_last_name":  "Smith"
+      "_last_name":  "Smith",
+      "_age": "32"
     }
+
+%p
+  Its look easy to make it in database we should send few requests ( "|" mean post data ).
+
+%pre
+  :preserve
+    GET  /people/?action=mkdir&key=1
+    POST /people/1?action=write&key=_first_name | Benjamin
+    POST /people/1?action=write&key=_last_name  | Smith
+    POST /people/1?action=write&key=_age        | 32
+    
+%p
+  So now make him a family
+  
+  
+%pre
+  :preserve
+    !!JavaScript
+    // at /people/2
+    {
+      "_first_name": "Natalie",
+      "_last_name":  "Smith",
+      "_age": "33"
+    }
+    
+    // at /people/3
+    {
+      "_first_name": "Robert",
+      "_last_name":  "Smith",
+      "_age": "7"
+    }
+    
+    // at /people/4
+    {
+      "_first_name": "Elisabeth",
+      "_last_name":  "Smith",
+      "_age": "65"
+    }
+    
+    // at /people/5
+    {
+      "_first_name": "John",
+      "_last_name":  "Smith",
+      "_age": "64"
+    }
+    
+%p Having family we can make relation between persons in database by action link
+
+%pre
+  :preserve
+    # Natalie is Benjamin's wife
+    GET /people/1?action=link&key=wife&toPath=/people/2   
+    
+    # Robert is Benjamin's son
+    GET /people/1?action=link&key=son&toPath=/people/3    
+    
+    # Elisabeth is Benjamin's mother
+    GET /people/1?action=link&key=mother&toPath=/people/4 
+    
+    # John is Benjamin's father
+    GET /people/1?action=link&key=father&toPath=/people/5 
+    
+    # Robert is Natalie's son
+    GET /people/2?action=link&key=son&toPath=/people/3    
+    
+    # Robert has father Benjamin and mother Natalie
+    GET /people/3?action=link&key=father&toPath=/people/1 
+    GET /people/3?action=link&key=mother&toPath=/people/2 
+    
+    # Benjamin has parents ...
+    GET /people/4?action=link&key=son&toPath=/people/1
+    GET /people/5?action=link&key=son&toPath=/people/1
+    
+    # because they are married  
+    GET /people/4?action=link&key=hasband&toPath=/people/5
+    GET /people/5?action=link&key=wife&toPath=/people/4
+    
+  
+%p
+  Relations is key feature in graph structures. Child can be found at 
+  
+%pre /people/5/son/wife/son
+
+%p
+  This is not shortest way byt you can see how relations work
