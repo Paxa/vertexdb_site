@@ -1,6 +1,12 @@
 require 'rubygems'
 require 'sinatra'
+
+require 'coderay'
+require 'rack/codehighlighter'
 require 'haml'
+
+use Rack::Codehighlighter, :coderay, :element => "pre", :pattern => /\A!!(\w+)\s*\n/
+
 require 'yaml'
 require 'helpers'
 
@@ -32,6 +38,6 @@ end
 
 get '/:page' do
   @title = ''
-  return haml :page_404 unless %w{install doc quick_start guides}.include? params[:page]
-  haml params[:page].to_sym
+  return haml :page_404 unless %w{install doc quick_start guides maintain}.include? params[:page]
+  haml "pages/#{params[:page]}".to_sym
 end
