@@ -10,12 +10,14 @@ GEM
     rack-codehighlighter (0.4.7)
       nokogiri (>= 1.4.1)
       rack (>= 1.0.0)
-    sinatra (1.0)
-      rack (>= 1.0)
+    sinatra (1.1.0)
+      rack (~> 1.1)
+      tilt (~> 1.1)
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    tilt (1.1)
 
 PLATFORMS
   ruby
@@ -24,5 +26,5 @@ DEPENDENCIES
   coderay
   haml
   rack-codehighlighter
-  sinatra
+  sinatra (= 1.1)
   thin

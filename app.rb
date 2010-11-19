@@ -18,7 +18,7 @@ end
 
 get '/' do
   @title = ''
-  haml :index
+  haml :'pages/index'
 end
 
 get '/application.css' do
@@ -37,11 +37,15 @@ get '/coderay.css' do
 end
 
 get '/doc' do
-  haml :doc
+  haml :'pages/doc'
 end
 
 get '/:page' do
   @title = ''
-  return haml :page_404 unless %w{install doc quick_start guides maintain}.include? params[:page]
+  
+  if !%w{install doc quick_start guides maintain}.include? params[:page]
+    return haml :page_404
+  end
+  
   haml "pages/#{params[:page]}".to_sym
 end
