@@ -1,7 +1,5 @@
-require 'sinatra'
-Sinatra::Application.default_options.merge!(
-  :run => false,
-  :env => :production
-)
+ENV['RACK_ENV'] = "production"
+
 require 'app'
-run Sinatra.application
+
+run Sinatra::Application
